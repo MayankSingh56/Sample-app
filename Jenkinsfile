@@ -7,7 +7,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 git branch: 'main', 
-                url: 'https://github.com/MayankSingh56/Simple-app.git'
+                url: 'https://github.com/MayankSingh56/Sample-app.git'
             }
         }
         stage('Build Docker Image') {
@@ -19,13 +19,13 @@ pipeline {
             steps {
                 sh 'docker stop ${DOCKER_IMAGE}-container || true'
                 sh 'docker rm ${DOCKER_IMAGE}-container || true'
-                sh 'docker run -d -p 8080:80 --name ${DOCKER_IMAGE}-container ${DOCKER_IMAGE}:latest'
+                sh 'docker run -d -p 8081:80 --name ${DOCKER_IMAGE}-container ${DOCKER_IMAGE}:latest'
             }
         }
         stage('Test') {
             steps {
                 sh 'sleep 5' // Wait for container to start
-                sh 'curl -f http://localhost:8080 || exit 1'
+                sh 'curl -f http://localhost:8081 || exit 1'
             }
         }
     }
